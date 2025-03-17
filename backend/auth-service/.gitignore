@@ -1,0 +1,43 @@
+# Environment Variables
+.env
+
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE and Editor Files
+.vscode/
+.idea/
+.DS_Store
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Coverage directory
+coverage/
+
+# Temporary and Build Files
+tmp/
+temp/
+dist/
+
+# Mac files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# Other files
+*.swp
+.DS_Store?
+._*
