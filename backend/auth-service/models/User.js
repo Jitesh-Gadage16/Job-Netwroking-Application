@@ -1,4 +1,3 @@
-// models/User.js
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
@@ -6,6 +5,7 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name is required"],
+        trim: true,
     },
     email: {
         type: String,
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false,
+        select: false, // Hide password in queries
     },
     role: {
         type: String,
@@ -31,8 +31,44 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    emailVerified: { type: Boolean, default: false },
-    googleId: String, // Optional
+    emailVerified: {
+        type: Boolean,
+        default: false
+    },
+    googleId: {
+        type: String
+    }, // Optional for Google OAuth
+
+    // 🟢 New Fields (for User Services)
+    bio: {
+        type: String,
+        default: "",
+    },
+    location: {
+        type: String,
+        default: "",
+    },
+    skills: [
+        {
+            type: String,
+        },
+    ],
+    socialLinks: {
+        linkedin: { type: String, default: "" },
+        github: { type: String, default: "" },
+        website: { type: String, default: "" },
+    },
+    points: {
+        type: Number,
+        default: 0,
+    },
+    rank: {
+        type: String,
+        default: "Beginner Connector",
+    },
+    badges: [{
+        type: String
+    }], // Earned badges
 
 });
 

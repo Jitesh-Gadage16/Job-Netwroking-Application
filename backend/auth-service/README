@@ -1,0 +1,85 @@
+# 🔐 **Auth Service**
+
+> **Authentication Microservice** for Networking & Job-Seeking App  
+> Built with Node.js, Express.js, MongoDB, and Passport.js.
+
+---
+
+## 🚀 **Features**
+
+- ✅ **User Registration (Signup)**
+- ✅ **Email Verification (OTP via Nodemailer)**
+- ✅ **User Login (Email & Password)**
+- ✅ **Google OAuth Signup/Login**
+- ✅ **JWT-based Authentication**
+- ✅ **Password Hashing (bcrypt)**
+
+---
+
+## 🛠️ **Tech Stack**
+
+- **Node.js & Express.js**
+- **MongoDB & Mongoose**
+- **JWT & bcrypt**
+- **Passport.js (Google OAuth)**
+- **Nodemailer (OTP Emails)**
+
+---
+
+## 🌐 **API Routes**
+
+| Method | Endpoint                  | Description               |
+| ------ | ------------------------- | ------------------------- |
+| POST   | `/api/v1/auth/signup`     | User Signup (Sends OTP)   |
+| POST   | `/api/v1/auth/verify-otp` | Verify User Email via OTP |
+| POST   | `/api/v1/auth/login`      | User Login (JWT Auth)     |
+| POST   | `/api/v1/auth/resendOTP`  | Resend OTP (optional)     |
+| GET    | `/auth/google`            | Google OAuth login/signup |
+| GET    | `/auth/google/callback`   | Google OAuth callback     |
+
+---
+
+## 📌 **Setup & Run**
+
+**Install dependencies**
+
+```bash
+npm install
+```
+
+**Set Environment Variables (`.env`):**
+
+```env
+PORT=8000
+MONGODB_URI=mongodb://localhost:27017/auth_db
+JWT_SECRET=your_jwt_secret
+EMAIL_USERNAME=your-email@gmail.com
+EMAIL_PASSWORD=your-gmail-app-password
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
+
+**Run service (Development)**
+
+```bash
+npm run dev
+```
+
+---
+
+## 🛡️ **Security & Best Practices**
+
+- JWT Authentication
+- Secure Password Hashing (bcrypt)
+- OTP Verification (email)
+- Google OAuth login integration
+
+---
+
+## 📮 **Testing API**
+
+Use **Postman** to test endpoints easily.
+
+---
+
+**✅ Auth-Service ready and documented!**

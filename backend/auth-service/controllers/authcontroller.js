@@ -13,6 +13,26 @@ const generateToken = (id) =>
 exports.signup = async (req, res) => {
     const { name, email, password, role } = req.body;
 
+    if (!name || name.trim().length === 0) {
+        res.status(400).json({ message: "Name is required." });
+    } else if (!/^[A-Za-z\s]+$/.test(name)) {
+        res.status(400).json({ message: "Name must contain letters only (A-Z, a-z)." });
+
+    }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        res.status(400).json({ message: "Enter a valid email address." });
+
+    }
+
+    if (!password || password.length < 8) {
+        res.status(400).json({ message: "Password must be at least 8 characters." });
+    }
+
+    if (!role || !["seeker", "connector"].includes(role)) {
+        res.status(400).json({ message: "Role must be either 'seeker' or 'connector'." });
+
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ message: "User already exists." });
 
@@ -28,7 +48,6 @@ exports.signup = async (req, res) => {
         message: "Signup successful, OTP sent to your email",
     });
 };
-
 
 exports.login = async (req, res) => {
     const { email, password } = req.body;
