@@ -1,27 +1,24 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User"); // Ensure correct filename
+const BlacklistedToken = require("../models/BlacklistedToken");
 
 // Define the `protect` function before exporting
 const protect = async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-    if (!token) {
-        return res.status(401).json({ message: "Unauthorized: No token provided" });
-    }
+    // Check if token is blacklisted
+    const blacklisted = await BlacklistedToken.findOne({ token });
+    if (blacklisted) return res.status(401).json({ message: "Token is blacklisted" });
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = await User.findById(decoded.id).select("-password");
+        if (!req.user) return res.status(401).json({ message: "User not found" });
 
-        // Check if user exists
-        const user = await User.findById(decoded.id).select("-password");
-        if (!user) {
-            return res.status(401).json({ message: "User not found" });
-        }
-
-        req.user = user; // Attach user to request
         next();
-    } catch (error) {
-        return res.status(401).json({ message: "Invalid or Expired Token" });
+    } catch (err) {
+        return res.status(401).json({ message: "Invalid or expired token" });
     }
 };
 

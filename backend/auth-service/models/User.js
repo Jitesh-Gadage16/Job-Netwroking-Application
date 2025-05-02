@@ -69,6 +69,9 @@ const userSchema = new mongoose.Schema({
     badges: [{
         type: String
     }], // Earned badges
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+
 
 });
 

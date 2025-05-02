@@ -34,4 +34,14 @@ router.get("/failure", (req, res) => {
     res.send("❌ Google OAuth login failed!");
 });
 
+router.get("/google/logout", (req, res) => {
+    req.logout(function () {
+        res.clearCookie("connect.sid");
+        res.redirect("http://localhost:3000/login"); // Redirect to frontend login
+    });
+});
+
+
+
+
 module.exports = router;
