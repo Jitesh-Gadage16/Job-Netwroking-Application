@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body>
+      <body className='bg-white'>
         <GoogleOAuthProvider clientId="548740690615-6jm5ctm0ra1j3tel27etm3bh8idrc66n.apps.googleusercontent.com">
 
           <AuthProvider>

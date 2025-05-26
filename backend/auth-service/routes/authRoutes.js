@@ -13,6 +13,10 @@ router.post("/logout", protect, authController.logout);
 router.post("/forgot-password", authController.forgotPassword);
 router.post("/reset-password", authController.resetPassword);
 
+router.patch("/set-role", protect, authController.setUserRole);
+router.get("/me", protect, authController.getMe);
+
+
 
 // Routes
 router.post("/signup", authController.signup);

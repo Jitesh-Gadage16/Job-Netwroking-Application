@@ -1,38 +1,48 @@
-// context/AuthContext.tsx
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
-const AuthContext = createContext<any>(null);
+type User = {
+    email: string;
+    role?: string;
+    isprofileCompleted?: boolean;
+    [key: string]: any;
+};
+
+const AuthContext = createContext<{
+    user: User | null;
+    login: (userData: User, token?: string) => void;
+    logout: () => void;
+} | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        const token = localStorage.getItem("accessToken");
-        const email = localStorage.getItem("email");
-        if (token && email) {
-            setUser({ email });
+        const token = Cookies.get("accessToken");
+
+        // Optional: Load user from cookie/session in future
+        if (token) {
+            // You might want to fetch user from API or decode JWT to get info
+            // For now, we'll keep user null and rely on login to set it
         }
     }, []);
 
-    const login = (userData: any, token: string) => {
-        // Save token in a cookie instead of localStorage
-        Cookies.set("accessToken", token, {
-            path: "/",
-            sameSite: "Lax",
-            secure: process.env.NODE_ENV === "production",
-            expires: 7, // days
-        });
-
-        localStorage.setItem("email", userData.email); // optional
+    const login = (userData: User, token?: string) => {
+        if (token) {
+            Cookies.set("accessToken", token, {
+                path: "/",
+                sameSite: "Lax",
+                secure: process.env.NODE_ENV === "production",
+                expires: 7,
+            });
+        }
         setUser(userData);
     };
 
     const logout = () => {
         Cookies.remove("accessToken");
-        localStorage.removeItem("email");
         setUser(null);
     };
 
@@ -43,4 +53,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) throw new Error("useAuth must be used within AuthProvider");
+    return context;
+};

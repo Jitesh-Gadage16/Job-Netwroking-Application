@@ -9,7 +9,7 @@ export default function Navbar() {
 
     return (
         <nav className="flex justify-between items-center px-6 py-4 shadow-md bg-white">
-            <Link href="/" className="text-xl font-bold">MyApp</Link>
+            <Link href="/" className="text-xl font-bold text-black">Connection Currencry</Link>
 
             <div className="space-x-4">
                 {user ? (
