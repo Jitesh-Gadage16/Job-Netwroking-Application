@@ -1,19 +1,22 @@
-// app/dashboard/page.tsx
 "use client";
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function DashboardPage() {
+    const { user } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        const email = localStorage.getItem("email");
+        if (!user) return; // wait for context to load
 
-        if (!email) {
-            router.push("/login"); // redirect if not logged in
+        if (!user?.email) {
+            router.replace("/login");
+        } else if (!user?.isprofileCompleted) {
+            router.replace("/create-profile");
         }
-    }, []);
+    }, [user]);
 
     return (
         <div className="p-6">

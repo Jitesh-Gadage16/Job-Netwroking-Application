@@ -5,6 +5,7 @@ const BlacklistedToken = require("../models/BlacklistedToken");
 // Define the `protect` function before exporting
 const protect = async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1];
+    console.log("token", token);
     if (!token) return res.status(401).json({ message: "Unauthorized" });
 
     // Check if token is blacklisted
@@ -13,6 +14,7 @@ const protect = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log("Decoded JWT:", decoded);
         req.user = await User.findById(decoded.id).select("-password");
         if (!req.user) return res.status(401).json({ message: "User not found" });
 

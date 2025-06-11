@@ -6,39 +6,54 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const BlacklistedToken = require("../models/BlacklistedToken");
 const crypto = require("crypto");
+const { OAuth2Client } = require('google-auth-library');
+const generateJWT = require("../utils/generateJWT");
 
+
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 
 const generateToken = (id) =>
     jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
 
 exports.googlesignup = async (req, res) => {
-    console.log("googlesign func enter")
     const { credential } = req.body;
 
     try {
-        // Verify the token using Google API
-        const googleResponse = await axios.get(
-            `https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`
-        );
+        const ticket = await client.verifyIdToken({
+            idToken: credential,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
 
-        const { email, name } = googleResponse.data;
+        const { email, name, sub: googleId } = payload;
 
-        // Check if user exists in the database
         let user = await User.findOne({ email });
 
+        console.log("user", user)
+
         if (!user) {
-            user = new User({ email, name });
+            user = new User({
+                name,
+                email,
+                googleId,
+                emailVerified: true,
+                role: null,
+            });
             await user.save();
         }
+        console.log("user>>>", user);
 
-        // Handle login session or JWT generation
-        // Send a success response or JWT token back to the frontend
-        res.status(200).json({ user });
+        const token = generateJWT(user);
+        console.log("token", token);
+        res.status(200).json({ token, user });
+
     } catch (error) {
+        console.error("Google signup error:", error);
         res.status(500).json({ message: 'Google login failed!' });
     }
-}
+};
 
 exports.signup = async (req, res) => {
     const { name, email, password, role } = req.body;
@@ -58,10 +73,10 @@ exports.signup = async (req, res) => {
         res.status(400).json({ message: "Password must be at least 8 characters." });
     }
 
-    if (!role || !["seeker", "connector"].includes(role)) {
-        res.status(400).json({ message: "Role must be either 'seeker' or 'connector'." });
+    // if (!role || !["seeker", "connector"].includes(role)) {
+    //     res.status(400).json({ message: "Role must be either 'seeker' or 'connector'." });
 
-    }
+    // }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ message: "User already exists." });
@@ -98,8 +113,12 @@ exports.login = async (req, res) => {
         "userID": user._id,
         "email": user.email,
         "emailVerified": user.emailVerified,
-        "photo": user.photo
-    }
+        "photo": user.photo,
+        "role": user.role,
+        "name": user.name,
+        "isProfileCompleted": user.isprofileCompleted
+
+    };
 
     res.status(200).json({ token: token, status: "success", user: userData });
 };
@@ -183,4 +202,30 @@ exports.resetPassword = async (req, res) => {
     await user.save();
 
     res.status(200).json({ message: "Password reset successful" });
+};
+
+exports.setUserRole = async (req, res) => {
+    const { role } = req.body;
+
+    console.log("role", role);
+
+    if (!["seeker", "connector"].includes(role)) {
+        return res.status(400).json({ message: "Invalid role" });
+    }
+
+    const user = await User.findByIdAndUpdate(
+        req.user.id,
+        { role },
+        { new: true }
+    );
+
+    console.log("user", user);
+
+    res.status(200).json({ message: "Role updated", user });
+};
+
+exports.getMe = async (req, res) => {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.status(200).json({ user });
 };

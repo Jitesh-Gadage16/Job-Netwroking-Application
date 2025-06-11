@@ -22,6 +22,10 @@ router.get(
 
 // Success & Failure Routes
 router.get("/success", (req, res) => {
+    console.log("google auth success", req.user);
+    if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
     const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, {
         expiresIn: "90d",
     });
