@@ -59,7 +59,7 @@ export default function SeekerView() {
                             </p>
                             <p className="text-indigo-700 mb-4">
                                 Connectors will be able to view your request and reach out to chat with you. Once they provide
-                                assistance and facilitate a connection, you'll be able to rate the value of their connection
+                                assistance and facilitate a connection, you&apos;ll be able to rate the value of their connection
                                 and award them points.
                             </p>
                             <button onClick={() => { setIsModalOpen(true); console.log("Open modal") }} className="bg-indigo-600 text-white py-2 px-4 rounded-md flex items-center space-x-2 hover:bg-indigo-700">

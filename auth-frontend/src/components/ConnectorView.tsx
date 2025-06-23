@@ -4,14 +4,29 @@ import { useEffect, useState } from "react";
 import axios from "@/lib/axios"; // your axios instance
 import { formatDistanceToNow } from "date-fns";
 import ConnectorProgressBar from "./ConnectorProgressBar"; // Adjust the import path as needed
-import { Users, Award, } from 'lucide-react';
+import { Users } from 'lucide-react';
 
 
 
 
+
+interface Post {
+    _id: string;
+    title: string;
+    description: string;
+    tags: string[];
+    createdAt: string;
+    createdBy?: {
+        userProfile?: {
+            firstName?: string;
+            title?: string;
+        };
+        name?: string;
+    };
+}
 
 export default function ConnectorView() {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -43,7 +58,7 @@ export default function ConnectorView() {
                                 seekers directly and provide assistance based on your network and expertise.
                             </p>
                             <p className="text-green-700 ">
-                                Once a connection has been made, seekers can rate your assistance. You'll be able to
+                                Once a connection has been made, seekers can rate your assistance. You&#39;ll be able to
                                 track your points and reputation in your profile, building your status as a trusted connector.
                             </p>
                             {/* <div className="flex items-center space-x-4">
@@ -72,7 +87,10 @@ export default function ConnectorView() {
                 <div className="flex gap-3 mb-4">
                     <input placeholder="Search connection requests" className="px-3 py-2 border rounded text-sm w-full" />
                     <select className="border px-3 py-2 text-sm rounded">
-                        <option>All Industries</option>
+                        <option value="">Filter by post</option>
+                        {posts.map((post: Post) => (
+                            <option key={post._id} value={post._id}>{post.title}</option>
+                        ))}
                     </select>
                     <button className="bg-green-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-green-700">
                         View All Requests
@@ -87,7 +105,7 @@ export default function ConnectorView() {
                 ) : (
                     posts.length > 0 ? (
                         <div className="space-y-4">
-                            {posts.map((post: any) => (
+                            {posts.map((post: Post) => (
                                 <div key={post._id} className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md transition">
                                     <div className="flex justify-between items-center mb-1">
                                         <h3 className="font-semibold text-base">{post.title}</h3>

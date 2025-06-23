@@ -21,7 +21,7 @@ export default function RoleToggle() {
             });
             login(res.data.user); // update AuthContext
             toast.success(`You're now a ${nextRole}`);
-        } catch (err) {
+        } catch {
             toast.error("Failed to update role");
         } finally {
             setLoading(false);

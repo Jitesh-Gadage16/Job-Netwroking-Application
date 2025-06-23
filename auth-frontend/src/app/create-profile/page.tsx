@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/create-profile/page.tsx
 "use client";
 
@@ -63,7 +64,7 @@ export default function CreateProfilePage() {
             .then(({ data: res }) => {
                 if (res.profile) {
                     // merge the fetched profile into your stepwise data
-                    setData((prev) => ({ ...prev, ...res.profile }));
+                    setData((prev: any) => ({ ...prev, ...res.profile }));
                     setIsEdit(true);
                 }
             })

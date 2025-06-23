@@ -1,16 +1,16 @@
 
 "use client";
-import React, { useState } from 'react';
-import Image from "next/image";
+import React from 'react';
+// import Image from "next/image";
 // import { Search, MessageSquare } from 'lucide-react';
-import AllPosts from "@/components/AllPosts";
+// import AllPosts from "@/components/AllPosts";
 // import { useAuth } from "@/context/AuthContext";
-import { Users, Search, Award, Trophy, Play, Target, Zap, Crown } from 'lucide-react';
+import { Users, Search, Award, Trophy, Play, Target, Zap } from 'lucide-react';
 
 
 export default function Home() {
 
-  const [selectedRole, setSelectedRole] = useState(null);
+  // const [selectedRole, setSelectedRole] = useState(null);
   return (
     <>
 

@@ -8,7 +8,7 @@ const LEVELS = [
     { name: "Grandmaster", threshold: 1500 },
 ];
 
-import { Users, Award, } from 'lucide-react';
+// import { Users, Award, } from 'lucide-react';
 
 
 function getLevel(points: number) {

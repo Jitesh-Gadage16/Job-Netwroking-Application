@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
-import RoleToggle from "@/components/RoleToggle";
+// import RoleToggle from "@/components/RoleToggle";
 import SeekerView from "@/components/SeekerView";
 import ConnectorView from "@/components/ConnectorView";
 
