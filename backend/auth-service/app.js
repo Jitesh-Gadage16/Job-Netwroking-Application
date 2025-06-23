@@ -11,6 +11,8 @@ const oauthRoutes = require("./routes/oauthRoutes");
 const userRoutes = require("./routes/userRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const uploadImageRouter = require("./routes/uploadImage");
+const postRoutes = require("./routes/postRoutes");
+
 
 
 const app = express();
@@ -35,6 +37,7 @@ app.use(passport.session());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes); // User profile routes
 app.use("/api/v1/profile", profileRoutes); // User profile routes
+app.use("/api/v1/post", postRoutes); // User profile routes
 
 // Image‐upload endpoint (Cloudinary)
 app.use("/api/v1/upload-image", uploadImageRouter);

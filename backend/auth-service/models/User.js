@@ -12,13 +12,13 @@ const userSchema = new mongoose.Schema({
         select: false,
     },
     role: { type: String, enum: ["seeker", "connector", "admin"], default: "seeker" },
-    photo: { type: String, default: "default.jpg" },
     createdAt: { type: Date, default: Date.now },
     emailVerified: { type: Boolean, default: false },
     isprofileCompleted: { type: Boolean, default: false },
     googleId: { type: String },
     resetPasswordToken: String,
-    resetPasswordExpires: Date
+    resetPasswordExpires: Date,
+    userProfile: { type: mongoose.Schema.Types.ObjectId, ref: "UserProfile" }, // Reference to UserProfile model
 });
 
 
