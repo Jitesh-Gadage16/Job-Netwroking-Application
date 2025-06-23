@@ -45,7 +45,7 @@ export default function TopNavbar() {
     }, []);
 
     return (
-        <div className="flex items-center justify-between px-6 py-2 border-b bg-white shadow-sm relative z-50">
+        <div className="flex items-center justify-between px-6 py-2 shadow-sm border border-gray-100 bg-white  relative z-50">
             {/* Left: Logo + Search */}
             <div className="flex items-center gap-4 text-black">
                 <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users text-white"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
@@ -112,8 +112,8 @@ export default function TopNavbar() {
                     {dropdownOpen && (
                         <div className="absolute right-0 top-2.5 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-md z-[999]">
                             <div className="px-4 py-3 border-b">
-                                <p className="font-medium text-gray-800">{user.firstName} {user.lastName}</p>
-                                <p className="text-xs text-gray-500">{user.title || "User Title"}</p>
+                                <p className="font-medium text-gray-800 font-bold-700 ">{user.name} </p>
+                                {/* <p className="text-xs text-gray-500">{user.title || "User Title"}</p> */}
                             </div>
                             <ul className="text-sm">
                                 <li><Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">View Profile</Link></li>

@@ -18,7 +18,7 @@ export default function ClientLayoutWrapper({ children }: { children: React.Reac
     return (
         <>
             {!hideNavbar && <TopNavbar />}
-            <main className="p-4 max-w-4xl mx-auto">{children}</main>
+            <main className="p-4 max-w-7xl mx-auto">{children}</main>
         </>
     );
 }

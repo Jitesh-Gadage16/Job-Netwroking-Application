@@ -80,7 +80,7 @@ export default function ProfilePage() {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="w-full max-w-3xl bg-white rounded-xl shadow-lg overflow-hidden"
+                className="w-full max-w-5xl bg-white rounded-xl shadow-lg overflow-hidden"
             >
                 {/* Header */}
                 <div className="flex items-center space-x-6 p-6 bg-gradient-to-r from-purple-600 to-blue-500 text-white">

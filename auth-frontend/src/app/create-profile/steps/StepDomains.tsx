@@ -4,14 +4,27 @@
 import React from "react";
 
 const OPTIONS = [
-    "Healthcare",
-    "Startups",
-    "Product Design",
-    "Software Development",
-    "Operations",
-    "Mentorship",
-    "Networking",
-    "Data Science",
+    "Information Technology & Software",
+    "Data Science & Analytics",
+    "Product & UX Design",
+    "Healthcare & Life Sciences",
+    "Operations & Supply Chain",
+    "Finance & Fintech",
+    "Marketing, Communications & Growth",
+    "Sales & Business Development",
+    "Human Resources & Talent",
+    "Consulting & Professional Services",
+    "Education, Training & Mentorship",
+    "Startups & Entrepreneurship",
+    "Networking & Community",
+    "Manufacturing & Engineering",
+    "Energy, Utilities & Sustainability",
+    "Retail, E-commerce & Consumer Goods",
+    "Media, Entertainment & Gaming",
+    "Telecommunications & Connectivity",
+    "Transportation, Logistics & Mobility",
+    "Real Estate, Construction & Infrastructure",
+    "Government, Public Sector & Non-profit"
 ];
 
 interface StepDomainsProps {
